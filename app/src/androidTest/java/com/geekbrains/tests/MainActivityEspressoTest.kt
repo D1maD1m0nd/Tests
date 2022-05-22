@@ -40,7 +40,22 @@ class MainActivityEspressoTest {
         }
     }
 
-    private fun delay(): ViewAction? {
+
+    @Test
+    fun activityWidget_IsVisible() {
+        onView(withId(R.id.searchEditText)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.progressBar)).check(matches(withEffectiveVisibility(Visibility.GONE)))
+        onView(withId(R.id.toDetailsActivityButton)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.totalCountTextView)).check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+    }
+
+    @Test
+    fun activityWidgetTextState_IsCorrect() {
+        onView(withId(R.id.searchEditText)).check(matches(withHint(R.string.search_hint)))
+        onView(withId(R.id.toDetailsActivityButton)).check(matches(withText(R.string.to_details)))
+        onView(withId(R.id.totalCountTextView)).check(matches(withText(R.string.results_count)))
+    }
+    private fun delay(): ViewAction {
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> = isRoot()
             override fun getDescription(): String = "wait for $2 seconds"
